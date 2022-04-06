@@ -1,6 +1,13 @@
-import { Paper as MuiPaper, TextField, Typography, Grid } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import { useState } from "react";
+import { Paper as MuiPaper } from "@mui/material";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { Formik } from "formik";
+import axios from "axios";
+import * as yup from "yup";
+
+import Form from "./sign in components/Form";
+import { useStoreActions } from "easy-peasy";
 
 const Paper = styled(MuiPaper)`
   width: 500px;
@@ -8,29 +15,42 @@ const Paper = styled(MuiPaper)`
 `;
 
 export default function SignIn() {
+  const navigate = useNavigate();
+  const { setUserDetails } = useStoreActions((actions) => actions.userDetails);
+
+  const [formData] = useState({
+    username: "",
+    password: "",
+  });
+
   return (
     <Paper>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
-          <Typography variant="h6" align="center" gutterBottom>
-            Welcome! Sign In to Continue
-          </Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <TextField fullWidth name="" label="User Name" />
-        </Grid>
-
-        <Grid item xs={12}>
-          <TextField fullWidth name="" label="Password" />
-        </Grid>
-
-        <Grid item xs={12}>
-          <LoadingButton variant="contained" fullWidth style={{ textTransform: "none" }}>
-            Sign In
-          </LoadingButton>
-        </Grid>
-      </Grid>
+      <Formik
+        validateOnMount
+        initialValues={formData}
+        validationSchema={validationSchema}
+        onSubmit={(formData, { setSubmitting }) => {
+          axios({
+            url: "/sign-in",
+            data: formData,
+          })
+            .then((response) => {
+              if (response.data.status) {
+                setUserDetails(response.data.data);
+              }
+            })
+            .catch((error) => {
+              console.log(`%c[error]`, "font-weight: bold; color: red", error);
+            });
+        }}
+      >
+        {(formikProps) => <Form formikProps={formikProps} />}
+      </Formik>
     </Paper>
   );
 }
+
+const validationSchema = yup.object({
+  username: yup.string().required("Please enter your user name"),
+  password: yup.string().required("Please enter your password"),
+});
