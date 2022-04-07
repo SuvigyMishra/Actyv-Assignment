@@ -13,19 +13,31 @@ mongoose
     console.log(`%c[error]`, "font-weight: bold; color: red", error);
   });
 
+async function findPage(pageName) {
+  const page = await Page.findOne({ name: pageName });
+
+  return page._id;
+}
+
 async function createUser() {
+  const pageIDs = {
+    home: await findPage("Home"),
+    page1: await findPage("Page 1"),
+    page2: await findPage("Page 2"),
+  };
+
   const user = await User.create({
-    name: "User 3",
+    name: "User 4",
     business: "Business 2",
     theme: "B2",
     password: "password",
     permissions: [
       {
-        pageID: "624eacf775da364172c1c992",
+        pageID: pageIDs.home,
         permissions: true,
       },
       {
-        pageID: "624ead007571832ee1eac0f6",
+        pageID: pageIDs.page2,
         permissions: true,
       },
     ],
@@ -33,3 +45,5 @@ async function createUser() {
 
   console.log(`%c[user]`, "font-weight: bold; color: red", user);
 }
+
+// createUser();

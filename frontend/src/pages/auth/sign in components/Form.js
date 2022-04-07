@@ -45,8 +45,8 @@ export default function Form({ formikProps }) {
           variant="contained"
           fullWidth
           onClick={formikProps.handleSubmit}
-          disabled={!formikProps.isValid}
-          loading={!!formikProps.isSubmitting}
+          // disabled={!formikProps.isValid}
+          // loading={!!formikProps.isSubmitting}
           style={{ textTransform: "none" }}
         >
           Sign In

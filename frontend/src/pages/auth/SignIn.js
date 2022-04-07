@@ -34,6 +34,7 @@ export default function SignIn() {
             url: "/api/auth/sign-in",
             baseURL: "http://localhost:3001",
             data: formData,
+            method: "POST",
           })
             .then((response) => {
               if (response.data.status) {
