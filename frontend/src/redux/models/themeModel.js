@@ -5,15 +5,19 @@ const themeModel = {
     name: "DEFAULT",
     background: "#C4E7F7",
 
-    setTheme: action((state, payload) => {
-      switch (payload) {
-        case "b1":
+    setTheme: action((state, { theme }) => {
+      switch (theme) {
+        case "B1":
+          localStorage.setItem("THEME", "B1");
+
           return {
             name: "Business 1",
             background: "#FF99BB",
           };
 
-        case "b2":
+        case "B2":
+          localStorage.setItem("THEME", "B1");
+
           return {
             name: "Business 2",
             background: "#C7F7D4",

@@ -7,12 +7,18 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #c4e7f7;
 `;
 
 export default function AuthLayout() {
+  const theme = localStorage.getItem("THEME");
+
   return (
-    <Wrapper>
+    <Wrapper
+      style={{
+        background:
+          theme === "B1" ? "#FF99BB" : theme === "B2" ? "#C7F7D4" : "#c4e7f7",
+      }}
+    >
       <Outlet />
     </Wrapper>
   );

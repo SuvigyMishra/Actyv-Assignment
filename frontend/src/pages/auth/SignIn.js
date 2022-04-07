@@ -17,6 +17,7 @@ const Paper = styled(MuiPaper)`
 export default function SignIn() {
   const navigate = useNavigate();
   const { setUserDetails } = useStoreActions((actions) => actions.userDetails);
+  const { setTheme } = useStoreActions((actions) => actions.theme);
 
   const [formData] = useState({
     username: "",
@@ -39,6 +40,8 @@ export default function SignIn() {
             .then((response) => {
               if (response.data.status) {
                 setUserDetails(response.data.data);
+                setTheme({ theme: response.data.data.theme });
+
                 navigate("/");
               }
             })
