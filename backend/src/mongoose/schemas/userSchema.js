@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
-const pageSchema = require("./pageSchema");
 
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
+    lowercase: true,
   },
   business: {
     type: String,
@@ -17,11 +17,6 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
-  },
-  permissions: {
-    type: Array,
-    default: [],
     required: true,
   },
 });
