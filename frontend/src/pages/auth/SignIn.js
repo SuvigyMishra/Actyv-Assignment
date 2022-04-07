@@ -31,12 +31,14 @@ export default function SignIn() {
         validationSchema={validationSchema}
         onSubmit={(formData, { setSubmitting }) => {
           axios({
-            url: "/sign-in",
+            url: "/api/auth/sign-in",
+            baseURL: "http://localhost:3001",
             data: formData,
           })
             .then((response) => {
               if (response.data.status) {
                 setUserDetails(response.data.data);
+                navigate("/");
               }
             })
             .catch((error) => {
